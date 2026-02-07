@@ -57,7 +57,7 @@ export default function Footer() {
                   doctorknowledgegeek@gmail.com
                 </a>
               </li>
-              <li className="text-white/50">Tumkur, Karnataka, India</li>
+              <li className="text-white/50">Karnataka, India</li>
               <li className="text-white/50">Languages: English, Kannada, Hindi, Urdu</li>
             </ul>
             <div className="mt-4 flex items-center gap-4">

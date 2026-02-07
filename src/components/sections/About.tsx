@@ -76,7 +76,7 @@ export default function About() {
                   Dr. Suha Riyaz is an experienced psychiatrist and medical
                   educator currently serving as Assistant Professor in the
                   Department of Psychiatry at Shridevi Institute of Medical
-                  Sciences &amp; Research Hospital, Tumkur. Known for calm
+                  Sciences &amp; Research Hospital, Karnataka. Known for calm
                   listening, clear communication, and a sincere commitment to
                   helping individuals and families heal.
                 </p>

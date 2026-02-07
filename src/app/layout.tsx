@@ -29,7 +29,6 @@ export const metadata: Metadata = {
     "anxiety treatment",
     "depression treatment",
     "couples therapy",
-    "psychiatrist Tumkur",
     "psychiatrist Karnataka",
     "online psychiatrist India",
     "Dr Suha Riyaz",

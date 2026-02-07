@@ -191,7 +191,7 @@ export default function Trust() {
         <AnimateOnScroll animation="fadeInUp">
           <div className="text-center">
             <a
-              href="https://www.google.com/search?q=Dr+Suha+Riyaz+Psychiatrist+Tumkur+reviews"
+              href="https://www.google.com/search?q=Dr+Suha+Riyaz+Psychiatrist+Karnataka+reviews"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-sage hover:text-sage-dark transition-colors text-sm font-medium"

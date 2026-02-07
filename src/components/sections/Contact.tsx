@@ -88,7 +88,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="text-charcoal font-medium">Location</p>
-                    <p className="text-warm-gray">Tumkur, Karnataka, India</p>
+                    <p className="text-warm-gray">Karnataka, India</p>
                   </div>
                 </div>
               </div>
@@ -119,7 +119,7 @@ export default function Contact() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
-                    <p className="text-warm-gray text-sm">Tumkur, Karnataka</p>
+                    <p className="text-warm-gray text-sm">Karnataka, India</p>
                     <p className="text-warm-gray/50 text-xs mt-1">
                       Map integration placeholder
                     </p>
