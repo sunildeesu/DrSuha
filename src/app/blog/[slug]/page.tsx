@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { fetchArticles } from "@/lib/articles";
 
@@ -74,8 +75,14 @@ export default async function BlogPost({ params }: PageProps) {
             {article.title}
           </h1>
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-sage/10 rounded-full flex items-center justify-center">
-              <span className="text-sm">👩‍⚕️</span>
+            <div className="w-10 h-10 rounded-full overflow-hidden">
+              <Image
+                src="/images/dr-suha.webp"
+                alt="Dr. Suha Riyaz"
+                width={40}
+                height={40}
+                className="w-full h-full object-cover object-top"
+              />
             </div>
             <div>
               <p className="text-charcoal text-sm font-medium">
