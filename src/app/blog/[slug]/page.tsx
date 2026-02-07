@@ -1,17 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { articles } from "@/lib/articles";
+import { fetchArticles } from "@/lib/articles";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export async function generateStaticParams() {
-  return articles.map((article) => ({ slug: article.slug }));
-}
-
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
+  const articles = await fetchArticles();
   const article = articles.find((a) => a.slug === slug);
   return {
     title: article
@@ -23,6 +20,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function BlogPost({ params }: PageProps) {
   const { slug } = await params;
+  const articles = await fetchArticles();
   const article = articles.find((a) => a.slug === slug);
 
   if (!article) {

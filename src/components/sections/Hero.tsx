@@ -25,7 +25,7 @@ export default function Hero() {
 
           <AnimateOnScroll animation="fadeInUp" delay={200}>
             <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl text-charcoal leading-tight mb-8">
-              Compassionate, Confidential Psychiatric Care for Individuals &amp;
+              Committed, Confidential Psychiatric Care for Individuals &amp;
               Families Seeking{" "}
               <span className="text-sage">Lasting Change</span>
             </h1>

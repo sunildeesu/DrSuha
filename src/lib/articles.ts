@@ -8,7 +8,117 @@ export interface Article {
   mediumUrl: string;
 }
 
-export const articles: Article[] = [
+const MEDIUM_RSS_URL = "https://medium.com/feed/@doctorknowledgegeek";
+
+function slugify(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "")
+    .slice(0, 80);
+}
+
+function estimateReadTime(text: string): string {
+  const words = text.split(/\s+/).length;
+  const minutes = Math.max(1, Math.ceil(words / 200));
+  return `${minutes} min read`;
+}
+
+function stripHtml(html: string): string {
+  return html
+    .replace(/<[^>]*>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function categorize(title: string, content: string): string {
+  const text = `${title} ${content}`.toLowerCase();
+  if (
+    text.includes("work") ||
+    text.includes("career") ||
+    text.includes("leadership") ||
+    text.includes("ageism") ||
+    text.includes("workplace") ||
+    text.includes("professional")
+  )
+    return "Leadership & Mental Health";
+  if (
+    text.includes("stress") ||
+    text.includes("label") ||
+    text.includes("empty nest") ||
+    text.includes("relationship") ||
+    text.includes("social media")
+  )
+    return "Modern Stress";
+  if (
+    text.includes("boring") ||
+    text.includes("performance") ||
+    text.includes("regulation") ||
+    text.includes("barnum")
+  )
+    return "Mental Performance";
+  return "Emotional Resilience";
+}
+
+function parseRssItems(xml: string): Article[] {
+  const items: Article[] = [];
+  const itemRegex = /<item>([\s\S]*?)<\/item>/g;
+  let match;
+
+  while ((match = itemRegex.exec(xml)) !== null) {
+    const itemXml = match[1];
+
+    const title = itemXml.match(/<title><!\[CDATA\[(.*?)\]\]><\/title>/)?.[1] ??
+      itemXml.match(/<title>(.*?)<\/title>/)?.[1] ??
+      "";
+
+    const link = itemXml.match(/<link>(.*?)<\/link>/)?.[1] ??
+      itemXml.match(/<guid.*?>(.*?)<\/guid>/)?.[1] ??
+      "";
+
+    const pubDate = itemXml.match(/<pubDate>(.*?)<\/pubDate>/)?.[1] ?? "";
+
+    const contentEncoded =
+      itemXml.match(/<content:encoded><!\[CDATA\[([\s\S]*?)\]\]><\/content:encoded>/)?.[1] ??
+      itemXml.match(/<description><!\[CDATA\[([\s\S]*?)\]\]><\/description>/)?.[1] ??
+      "";
+
+    const plainContent = stripHtml(contentEncoded);
+    const excerpt = plainContent.slice(0, 200).replace(/\s\S*$/, "") + "...";
+
+    const date = pubDate
+      ? new Date(pubDate).toLocaleDateString("en-US", {
+          month: "long",
+          year: "numeric",
+        })
+      : "";
+
+    if (title && link) {
+      items.push({
+        slug: slugify(title),
+        title,
+        category: categorize(title, plainContent),
+        excerpt,
+        date,
+        readTime: estimateReadTime(plainContent),
+        mediumUrl: link,
+      });
+    }
+  }
+
+  return items;
+}
+
+// Fallback articles in case RSS fetch fails
+const fallbackArticles: Article[] = [
   {
     slug: "denial-and-acceptance-and-the-dilemma",
     title: "Denial and Acceptance — and The Dilemma",
@@ -36,87 +146,46 @@ export const articles: Article[] = [
     title: "When The Idea of Death Becomes the Only Hope to Live",
     category: "Emotional Resilience",
     excerpt:
-      "Exploring 'functional depression' — individuals who appear fine externally while experiencing profound internal despair. The gap between clinical textbooks and real-world presentations.",
+      "Exploring 'functional depression' — individuals who appear fine externally while experiencing profound internal despair.",
     date: "October 2025",
     readTime: "7 min read",
     mediumUrl:
       "https://medium.com/@doctorknowledgegeek/when-the-idea-of-death-becomes-the-only-hope-to-live-f2d276e925bf",
   },
-  {
-    slug: "ageism-at-workplace",
-    title: "Ageism at the Workplace",
-    category: "Leadership & Mental Health",
-    excerpt:
-      "Workplace discrimination based on age and its psychological consequences — how ageism silently affects mental health, self-worth, and professional identity.",
-    date: "October 2025",
-    readTime: "4 min read",
-    mediumUrl:
-      "https://medium.com/@doctorknowledgegeek/ageism-at-workplace-15aa8eb36bdb",
-  },
-  {
-    slug: "people-who-actually-care-about-you",
-    title: "People Who Actually Care About You",
-    category: "Emotional Resilience",
-    excerpt:
-      "How to identify genuinely caring relationships in your life — and why recognising authentic connection is essential for emotional well-being.",
-    date: "July 2025",
-    readTime: "4 min read",
-    mediumUrl:
-      "https://medium.com/@doctorknowledgegeek/people-who-actually-care-about-you-242812e3d216",
-  },
-  {
-    slug: "be-boring-and-thats-okay",
-    title: "Be Boring! And That's Okay.",
-    category: "Mental Performance",
-    excerpt:
-      "Reframing 'boring' as subjective rather than negative. Why embracing authenticity over forced social conformity is a sign of emotional strength, not weakness.",
-    date: "May 2025",
-    readTime: "4 min read",
-    mediumUrl:
-      "https://medium.com/@doctorknowledgegeek/be-boring-and-thats-okay-f539ab79c847",
-  },
-  {
-    slug: "empty-nest-syndrome",
-    title: "To Those Who Don't Know What Empty Nest Syndrome Means...",
-    category: "Modern Stress",
-    excerpt:
-      "Examining the grief parents feel when children leave home — and practical strategies for rediscovering purpose and identity during this often-overlooked life transition.",
-    date: "May 2025",
-    readTime: "5 min read",
-    mediumUrl:
-      "https://medium.com/@doctorknowledgegeek/to-those-who-dont-know-what-empty-nest-syndrome-means-it-s-basically-the-grief-a-person-feels-8e12355bf21c",
-  },
-  {
-    slug: "why-we-see-ourselves-in-every-social-media-post",
-    title: "Why We See Ourselves in Every Social Media Post",
-    category: "Mental Performance",
-    excerpt:
-      "The Barnum Effect explained — how generalised statements feel personally relevant, from horoscopes and personality tests to memes and social media content.",
-    date: "November 2024",
-    readTime: "5 min read",
-    mediumUrl:
-      "https://medium.com/@doctorknowledgegeek/why-we-see-ourselves-in-every-social-media-post-the-psychology-behind-feeling-seen-by-memes-and-531f09a7ff66",
-  },
-  {
-    slug: "why-do-some-people-act-selflessly",
-    title: "Why Do Some People Act Selflessly, Without Any Expectation?",
-    category: "Emotional Resilience",
-    excerpt:
-      "Analysing altruism as a mature defence mechanism — how selfless behaviour provides psychological benefits including enhanced mood, reduced pain, and stronger community bonds.",
-    date: "October 2024",
-    readTime: "5 min read",
-    mediumUrl:
-      "https://medium.com/@doctorknowledgegeek/why-do-some-people-act-selflessly-without-any-expectation-e2a923e80ecb",
-  },
-  {
-    slug: "adult-depression-early-childhood-key-factor",
-    title: "Adult Depression: Is Early Childhood a Key Factor?",
-    category: "Emotional Resilience",
-    excerpt:
-      "Applying Melanie Klein's object relations theory to understand how early childhood relationships influence adult depressive patterns and mental health outcomes.",
-    date: "October 2024",
-    readTime: "6 min read",
-    mediumUrl:
-      "https://medium.com/@doctorknowledgegeek/adult-depression-is-early-childhood-a-key-factor-bbfcc0183e87",
-  },
 ];
+
+// Cache to avoid re-fetching on every import during the same server lifecycle
+let cachedArticles: Article[] | null = null;
+let cacheTimestamp = 0;
+const CACHE_TTL = 10 * 60 * 1000; // 10 minutes
+
+export async function fetchArticles(): Promise<Article[]> {
+  const now = Date.now();
+  if (cachedArticles && now - cacheTimestamp < CACHE_TTL) {
+    return cachedArticles;
+  }
+
+  try {
+    const res = await fetch(MEDIUM_RSS_URL, {
+      next: { revalidate: 600 }, // Next.js: revalidate every 10 minutes
+    });
+
+    if (!res.ok) throw new Error(`RSS fetch failed: ${res.status}`);
+
+    const xml = await res.text();
+    const articles = parseRssItems(xml);
+
+    if (articles.length > 0) {
+      cachedArticles = articles;
+      cacheTimestamp = now;
+      return articles;
+    }
+
+    return fallbackArticles;
+  } catch {
+    return cachedArticles ?? fallbackArticles;
+  }
+}
+
+// Keep static export for components that can't be async (like BlogPreview on home page)
+export const articles = fallbackArticles;
