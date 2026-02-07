@@ -126,10 +126,9 @@ export default function About() {
                   A Note from Dr. Suha
                 </p>
                 <p className="text-charcoal italic leading-relaxed">
-                  &ldquo;I believe that seeking help is not a sign of weakness —
-                  it is an act of courage. My role is to provide a safe, private
-                  space where you can explore your challenges without judgment
-                  and work toward meaningful, lasting change.&rdquo;
+                  &ldquo;Healing begins when denial ends, diagnosis is accurate,
+                  and help is sought early, even before functional impairment
+                  sets in.&rdquo;
                 </p>
               </div>
             </div>
