@@ -89,8 +89,9 @@ export default function About() {
                 <p>
                   She is certified in Couples Therapy and DBT-informed skills,
                   and is a Life Member of the Indian Psychiatric Society. Her
-                  approach integrates evidence-based treatments with genuine
-                  human connection.
+                  practice also extends to family therapy and the sensitive
+                  management of sexual dysfunction. Her approach integrates
+                  evidence-based treatments with genuine human connection.
                 </p>
               </div>
 
