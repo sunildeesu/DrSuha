@@ -4,7 +4,6 @@ export const physicianSchema = {
   name: "Dr. Suha Riyaz",
   description:
     "Consultant Psychiatrist & Assistant Professor of Psychiatry at Shridevi Institute of Medical Sciences, Karnataka. Offering committed, confidential psychiatric care specializing in women's emotional health, anxiety, mood disorders, couples therapy, and addiction psychiatry.",
-  image: "/images/dr-suha.webp",
   telephone: "+919148828642",
   email: "doctorknowledgegeek@gmail.com",
   url: "https://drsuhariyaz.com",

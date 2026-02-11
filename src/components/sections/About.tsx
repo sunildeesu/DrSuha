@@ -1,4 +1,3 @@
-import Image from "next/image";
 import AnimateOnScroll from "../ui/AnimateOnScroll";
 
 const whyPatients = [
@@ -37,15 +36,14 @@ export default function About() {
           {/* Portrait */}
           <AnimateOnScroll animation="slideInLeft">
             <div className="relative">
-              <div className="aspect-[3/4] bg-gradient-to-br from-cream to-cream-dark rounded-3xl overflow-hidden border border-cream-dark">
-                <Image
-                  src="/images/dr-suha.webp"
-                  alt="Dr. Suha Riyaz — Consultant Psychiatrist"
-                  width={600}
-                  height={800}
-                  className="w-full h-full object-cover object-top"
-                  priority
-                />
+              <div className="aspect-[3/4] bg-gradient-to-br from-sage/10 to-cream-dark rounded-3xl overflow-hidden border border-cream-dark flex items-center justify-center">
+                <div className="text-center">
+                  <div className="w-32 h-32 bg-sage/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <span className="font-heading text-5xl text-sage">SR</span>
+                  </div>
+                  <p className="font-heading text-2xl text-charcoal">Dr. Suha Riyaz</p>
+                  <p className="text-warm-gray text-sm mt-2">Consultant Psychiatrist</p>
+                </div>
               </div>
               {/* Floating credential badge */}
               <div className="absolute -bottom-4 -right-4 bg-white rounded-2xl shadow-lg px-6 py-4 border border-cream-dark">
